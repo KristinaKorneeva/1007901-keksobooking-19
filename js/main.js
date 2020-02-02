@@ -17,18 +17,23 @@ var DISCRIPTIONS = [
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 var mapPins = document.querySelector('.map__pins');
+var map = document.querySelector('.map');
+var temlatePin = document.querySelector('#pin')
+.content
+.querySelector('.map__pin');
+var pinNode = document.querySelector('.map__pins');
 
 var getRundomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
-var creatAd = function () {
+var creatMockPin = function () {
   var location = {
     x: getRundomNumber(0, mapPins.offsetWidth),
     y: getRundomNumber(130, 630)
   };
 
-  var ad = {
+  var item = {
     author: {
       avatar: 'img/avatars/user0' + getRundomNumber(1, 8) + '.png'
     },
@@ -48,42 +53,36 @@ var creatAd = function () {
     location: location
   };
 
-  return ad;
+  return item;
 };
 
-var createAdList = function (count) {
+var createMockPinsList = function (count) {
   var adList = [];
   for (var i = 0; i < count; i++) {
-    var ad = creatAd();
-    adList.push(ad);
+    var listAd = creatMockPin();
+    adList.push(listAd);
   }
   return adList;
 };
 
 // У блока .map уберает класс .map--faded
-var switchesMap = document.querySelector('.map');
-switchesMap.classList.remove('map--faded');
+map.classList.remove('map--faded');
 
-var temlatePin = document.querySelector('#pin')
-.content
-.querySelector('.map__pin');
-
-var renderPin = function (ad) {
+var renderPin = function (item) {
   var pinElement = temlatePin.cloneNode(true);
 
-  pinElement.style.left = ad.location.x - pinElement.offsetWidth / 2 + 'px';
-  pinElement.style.top = ad.location.y - pinElement.offsetWidth + 'px';
+  pinElement.style.left = item.location.x - pinElement.offsetWidth / 2 + 'px';
+  pinElement.style.top = item.location.y - pinElement.offsetWidth + 'px';
 
   var imgPin = pinElement.querySelector('img');
-  imgPin.src = ad.author.avatar;
-  imgPin.alt = ad.offer.title;
+  imgPin.src = item.author.avatar;
+  imgPin.alt = item.offer.title;
 
   return pinElement;
 };
 
 var renderPins = function () {
-  var pinNode = document.querySelector('.map__pins');
-  var pinList = createAdList(8);
+  var pinList = createMockPinsList(8);
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pinList.length; i++) {
