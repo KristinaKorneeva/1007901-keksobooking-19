@@ -45,7 +45,7 @@ var creatAd = function () {
       checkout: TIMES_REGISTRATION[random(0, TIMES_REGISTRATION.length - 1)],
       features: FEATURES.slice(0, random(1, FEATURES.length - 1)),
       description: DISCRIPTIONS[random(0, DISCRIPTIONS.length - 1)],
-      photos: PHOTOS.slice(0, random(1, PHOTO.length - 1))
+      photos: PHOTOS.slice(0, random(1, PHOTOS.length - 1))
     },
     location: location
   };
