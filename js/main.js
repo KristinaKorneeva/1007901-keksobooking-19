@@ -16,36 +16,34 @@ var DISCRIPTIONS = [
 ];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
-
 var mapPins = document.querySelector('.map__pins');
 
-var random = function (min, max) {
-  var rand = Math.floor(min + Math.random() * (max + 1 - min));
-  return rand;
+var getRundomNumber = function (min, max) {
+  return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
 var creatAd = function () {
   var location = {
-    x: random(0, mapPins.offsetWidth),
-    y: random(130, 630)
+    x: getRundomNumber(0, mapPins.offsetWidth),
+    y: getRundomNumber(130, 630)
   };
 
   var ad = {
     author: {
-      avatar: 'img/avatars/user0' + random(1, 8) + '.png'
+      avatar: 'img/avatars/user0' + getRundomNumber(1, 8) + '.png'
     },
     offer: {
-      title: TITLES_LIST[random(0, TITLES_LIST.length - 1)],
+      title: TITLES_LIST[getRundomNumber(0, TITLES_LIST.length - 1)],
       address: location.x + ', ' + location.y,
-      price: random(1, 1000000),
-      type: TYPES_HOUSING[random(0, TYPES_HOUSING.length - 1)],
-      rooms: random(1, 100),
-      guests: random(1, 100),
-      checkin: TIMES_REGISTRATION[random(0, TIMES_REGISTRATION.length - 1)],
-      checkout: TIMES_REGISTRATION[random(0, TIMES_REGISTRATION.length - 1)],
-      features: FEATURES.slice(0, random(1, FEATURES.length - 1)),
-      description: DISCRIPTIONS[random(0, DISCRIPTIONS.length - 1)],
-      photos: PHOTOS.slice(0, random(1, PHOTOS.length - 1))
+      price: getRundomNumber(1, 1000000),
+      type: TYPES_HOUSING[getRundomNumber(0, TYPES_HOUSING.length - 1)],
+      rooms: getRundomNumber(1, 100),
+      guests: getRundomNumber(1, 100),
+      checkin: TIMES_REGISTRATION[getRundomNumber(0, TIMES_REGISTRATION.length - 1)],
+      checkout: TIMES_REGISTRATION[getRundomNumber(0, TIMES_REGISTRATION.length - 1)],
+      features: FEATURES.slice(0, getRundomNumber(1, FEATURES.length - 1)),
+      description: DISCRIPTIONS[getRundomNumber(0, DISCRIPTIONS.length - 1)],
+      photos: PHOTOS.slice(0, getRundomNumber(1, PHOTOS.length - 1))
     },
     location: location
   };
