@@ -1,10 +1,10 @@
 'use strict';
 
-var TITLE_LIST = ['LANDABOUT TOKYO', 'First Cabin Kyobashi', 'Residential stage Higashi Shinjuku 1204', 'Capsule Hotel Transit Shinjuku', 'Shinjuku/ 3 min walk from station/incl mwifi #OH1', 'Shinjuku SaWa Colorful 2 Bedrooms', 'Sotetsu Fresa Inn Tokyo-Akasaka', 'Hotel Resol Ueno'];
-var TYPE_HOUSING = ['palace', 'flat', 'house', 'bungalo'];
-var TIME_REGISTRATION = ['12:00', '13:00', '14:00'];
+var TITLES_LIST = ['LANDABOUT TOKYO', 'First Cabin Kyobashi', 'Residential stage Higashi Shinjuku 1204', 'Capsule Hotel Transit Shinjuku', 'Shinjuku/ 3 min walk from station/incl mwifi #OH1', 'Shinjuku SaWa Colorful 2 Bedrooms', 'Sotetsu Fresa Inn Tokyo-Akasaka', 'Hotel Resol Ueno'];
+var TYPES_HOUSING = ['palace', 'flat', 'house', 'bungalo'];
+var TIMES_REGISTRATION = ['12:00', '13:00', '14:00'];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var DISCRIPTION = [
+var DISCRIPTIONS = [
   'Отель с рестораном, баром, общим лаунджем и бесплатным Wi-Fi расположен в Токио, в 400 м от храма Кеммио-ин и в 600 м от храма Шуншо-ин. К услугам гостей семейные номера и терраса. Из окон открывается вид на город.',
   'Отель расположен всего в 3 минутах ходьбы от железнодорожной станции Кёбаси. В числе удобств круглосуточная стойка регистрации и бесплатная камера хранения багажа. На всей территории предоставляется бесплатный Wi-Fi.',
   'Комплекс расположен в районе Синдзюку в Токио, недалеко от храма Инари-Кио. К услугам гостей бесплатный Wi-Fi и стиральная машина. К услугам гостей собственный балкон.',
@@ -14,7 +14,7 @@ var DISCRIPTION = [
   'Апартаменты с 2 спальнями расположены в районе Синдзюку в Токио, в 300 м от парка Тояма-Синдзюку, в 500 м от мемориального парка Коидзуми Якумо и в 500 м от храма Меотоги. Апартаменты находятся менее чем в 1 км от храма Синдзюку Сува и в 13 минутах ходьбы от музея Кореи.',
   'Отель Sotetsu находится всего в 50 метрах от станции метро Akasaka. К услугам гостей кофейня на первом этаже. Номера с бесплатным Wi-Fi оборудованы кондиционером и телевизором с плоским экраном.'
 ];
-var PHOTO = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 
 var mapPins = document.querySelector('.map__pins');
@@ -35,17 +35,17 @@ var creatAd = function () {
       avatar: 'img/avatars/user0' + random(1, 8) + '.png'
     },
     offer: {
-      title: TITLE_LIST[random(0, TITLE_LIST.length - 1)],
+      title: TITLES_LIST[random(0, TITLES_LIST.length - 1)],
       address: location.x + ', ' + location.y,
       price: random(1, 1000000),
-      type: TYPE_HOUSING[random(0, TYPE_HOUSING.length - 1)],
+      type: TYPES_HOUSING[random(0, TYPES_HOUSING.length - 1)],
       rooms: random(1, 100),
       guests: random(1, 100),
-      checkin: TIME_REGISTRATION[random(0, TIME_REGISTRATION.length - 1)],
-      checkout: TIME_REGISTRATION[random(0, TIME_REGISTRATION.length - 1)],
+      checkin: TIMES_REGISTRATION[random(0, TIMES_REGISTRATION.length - 1)],
+      checkout: TIMES_REGISTRATION[random(0, TIMES_REGISTRATION.length - 1)],
       features: FEATURES.slice(0, random(1, FEATURES.length - 1)),
-      description: DISCRIPTION[random(0, DISCRIPTION.length - 1)],
-      photos: PHOTO.slice(0, random(1, PHOTO.length - 1))
+      description: DISCRIPTIONS[random(0, DISCRIPTIONS.length - 1)],
+      photos: PHOTOS.slice(0, random(1, PHOTO.length - 1))
     },
     location: location
   };
