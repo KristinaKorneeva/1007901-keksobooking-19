@@ -26,6 +26,13 @@ var templateCard = document.querySelector('#card')
 .content
 .querySelector('.map__card');
 var mapFilters = map.querySelector('.map__filters-container');
+var typesHosting = {
+  flat: 'квартира',
+  house: 'дом',
+  palace: 'дворец',
+  bungalo: 'бунгало'
+};
+
 
 var getRundomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -97,14 +104,7 @@ var renderPins = function (dataList) {
 
 
 var getType = function (type) {
-  var TypesHosting = {
-    flat: 'квартира',
-    house: 'дом',
-    palace: 'дворец',
-    bungalo: 'бунгало'
-  };
-
-  return TypesHosting[type];
+  return typesHosting[type];
 };
 
 var renderCardPhotos = function (photos) {
@@ -120,11 +120,11 @@ var renderCardPhotos = function (photos) {
 };
 var renderCardFeatures = function (features) {
   var fragment = document.createDocumentFragment();
-  var timplate = templateCard.querySelector('.popup__feature');
-  timplate.classList.remove('popup__feature--wifi');
+  var template = templateCard.querySelector('.popup__feature');
+  template.classList.remove('popup__feature--wifi');
 
   for (var i = 0; i < features.length; i++) {
-    var temlateFeature = timplate.cloneNode(true);
+    var temlateFeature = template.cloneNode(true);
     temlateFeature.classList.add('popup__feature--' + features[i]);
 
     fragment.appendChild(temlateFeature);
