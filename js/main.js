@@ -121,7 +121,6 @@ var renderCardPhotos = function (photos) {
 var renderCardFeatures = function (features) {
   var fragment = document.createDocumentFragment();
   var template = templateCard.querySelector('.popup__feature');
-  template.classList.remove('popup__feature--wifi');
 
   for (var i = 0; i < features.length; i++) {
     var temlateFeature = template.cloneNode(true);
