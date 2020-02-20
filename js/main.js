@@ -15,6 +15,7 @@ var DISCRIPTIONS = [
   'Отель Sotetsu находится всего в 50 метрах от станции метро Akasaka. К услугам гостей кофейня на первом этаже. Номера с бесплатным Wi-Fi оборудованы кондиционером и телевизором с плоским экраном.'
 ];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var ENTER_KEY = 13;
 
 var mapPins = document.querySelector('.map__pins');
 var map = document.querySelector('.map');
@@ -22,16 +23,19 @@ var temlatePin = document.querySelector('#pin')
 .content
 .querySelector('.map__pin');
 var pinNode = document.querySelector('.map__pins');
-var templateCard = document.querySelector('#card')
-.content
-.querySelector('.map__card');
-var mapFilters = map.querySelector('.map__filters-container');
-var typesHosting = {
-  flat: 'квартира',
-  house: 'дом',
-  palace: 'дворец',
-  bungalo: 'бунгало'
-};
+// var templateCard = document.querySelector('#card')
+// .content
+// .querySelector('.map__card');
+// var mapFilters = map.querySelector('.map__filters-container');
+// var typesHosting = {
+//   flat: 'квартира',
+//   house: 'дом',
+//   palace: 'дворец',
+//   bungalo: 'бунгало'
+// };
+var adForm = document.querySelector('.ad-form');
+var fieldsetList = adForm.querySelectorAll('fieldset');
+var mainPin = document.querySelector('.map__pin--main');
 
 
 var getRundomNumber = function (min, max) {
@@ -77,7 +81,7 @@ var createMockPinsList = function (count) {
 };
 
 // У блока .map уберает класс .map--faded
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var renderPin = function (item) {
   var pinElement = temlatePin.cloneNode(true);
@@ -102,62 +106,91 @@ var renderPins = function (dataList) {
   pinNode.appendChild(fragment);
 };
 
+// отрисовка карточки
+// var getType = function (type) {
+//   return typesHosting[type];
+// };
 
-var getType = function (type) {
-  return typesHosting[type];
-};
+// var renderCardPhotos = function (photos) {
+//   var fragment = document.createDocumentFragment();
 
-var renderCardPhotos = function (photos) {
-  var fragment = document.createDocumentFragment();
+//   for (var i = 0; i < photos.length; i++) {
+//     var temlateImg = templateCard.querySelector('.popup__photo').cloneNode(true);
 
-  for (var i = 0; i < photos.length; i++) {
-    var temlateImg = templateCard.querySelector('.popup__photo').cloneNode(true);
+//     temlateImg.src = photos[i];
+//     fragment.appendChild(temlateImg);
+//   }
+//   return fragment;
+// };
+// var renderCardFeatures = function (features) {
+//   var fragment = document.createDocumentFragment();
+//   var template = templateCard.querySelector('.popup__feature');
 
-    temlateImg.src = photos[i];
-    fragment.appendChild(temlateImg);
-  }
-  return fragment;
-};
-var renderCardFeatures = function (features) {
-  var fragment = document.createDocumentFragment();
-  var template = templateCard.querySelector('.popup__feature');
+//   for (var i = 0; i < features.length; i++) {
+//     var temlateFeature = template.cloneNode(true);
+//     temlateFeature.classList.add('popup__feature--' + features[i]);
 
-  for (var i = 0; i < features.length; i++) {
-    var temlateFeature = template.cloneNode(true);
-    temlateFeature.classList.add('popup__feature--' + features[i]);
+//     fragment.appendChild(temlateFeature);
+//   }
+//   return fragment;
+// };
 
-    fragment.appendChild(temlateFeature);
-  }
-  return fragment;
-};
+// var renderCard = function (item) {
+//   var cardElement = templateCard.cloneNode(true);
 
-var renderCard = function (item) {
-  var cardElement = templateCard.cloneNode(true);
+//   cardElement.querySelector('.popup__title').textContent = item.offer.title;
+//   cardElement.querySelector('.popup__text--address').textContent = item.offer.address;
+//   cardElement.querySelector('.popup__text--price').textContent = item.offer.price + '₽/ночь.';
+//   cardElement.querySelector('.popup__type').textContent = getType(item.offer.type);
+//   cardElement.querySelector('.popup__text--capacity').textContent = item.offer.rooms + ' комнаты для ' + item.offer.guests + ' гостей';
+//   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ', выезд до ' + item.offer.checkout;
 
-  cardElement.querySelector('.popup__title').textContent = item.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = item.offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = item.offer.price + '₽/ночь.';
-  cardElement.querySelector('.popup__type').textContent = getType(item.offer.type);
-  cardElement.querySelector('.popup__text--capacity').textContent = item.offer.rooms + ' комнаты для ' + item.offer.guests + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + item.offer.checkin + ', выезд до ' + item.offer.checkout;
+//   cardElement.querySelector('.popup__features').textContent = '';
+//   cardElement.querySelector('.popup__features').appendChild(renderCardFeatures(item.offer.features));
 
-  cardElement.querySelector('.popup__features').textContent = '';
-  cardElement.querySelector('.popup__features').appendChild(renderCardFeatures(item.offer.features));
+//   cardElement.querySelector('.popup__description').textContent = item.offer.description;
+//   cardElement.querySelector('.popup__photos').textContent = '';
+//   cardElement.querySelector('.popup__photos').appendChild(renderCardPhotos(item.offer.photos));
 
-  cardElement.querySelector('.popup__description').textContent = item.offer.description;
-  cardElement.querySelector('.popup__photos').textContent = '';
-  cardElement.querySelector('.popup__photos').appendChild(renderCardPhotos(item.offer.photos));
+//   cardElement.querySelector('.popup__avatar').src = item.author.avatar;
 
-  cardElement.querySelector('.popup__avatar').src = item.author.avatar;
-
-  return cardElement;
-};
+//   return cardElement;
+// };
 
 var renderMapItems = function () {
   var pinList = createMockPinsList(8);
   renderPins(pinList);
-  mapFilters.before(renderCard(pinList[0]));
+  // mapFilters.before(renderCard(pinList[0]));
 };
-renderMapItems();
 
 
+// делает эл-ты не активными
+map.classList.add('map--faded');
+adForm.classList.add('ad-form--disabled');
+
+for (var i = 0; i < fieldsetList.length; i++) {
+  fieldsetList[i].setAttribute('disabled', 'disabled');
+}
+
+// делает эл-ты активными
+var setActiveState = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+
+  for (var j = 0; j < fieldsetList.length; j++) {
+    fieldsetList[j].removeAttribute('disabled');
+  }
+  renderMapItems();
+};
+
+mainPin.addEventListener('mousedown', function (event) {
+  if (event.button === 0) {
+    setActiveState();
+  }
+});
+
+mainPin.addEventListener('keydown', function (event) {
+  if (event.keyCode === ENTER_KEY) {
+    setActiveState();
+  }
+});
