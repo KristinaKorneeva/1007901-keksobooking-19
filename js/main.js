@@ -16,6 +16,8 @@ var DISCRIPTIONS = [
 ];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var ENTER_KEY = 13;
+var PIN_WIDTH = 65;
+var PIN_HEIGHT = 82;
 
 var mapPins = document.querySelector('.map__pins');
 var map = document.querySelector('.map');
@@ -180,7 +182,9 @@ var setActiveState = function () {
   for (var j = 0; j < fieldsetList.length; j++) {
     fieldsetList[j].removeAttribute('disabled');
   }
+  setAddress();
   renderMapItems();
+  setAddress(getPinCords(true));
 };
 
 mainPin.addEventListener('mousedown', function (event) {
@@ -194,3 +198,23 @@ mainPin.addEventListener('keydown', function (event) {
     setActiveState();
   }
 });
+
+mainPin.addEventListener('mousemove', function () {
+  setAddress(getPinCords(true));
+});
+
+var input = document.querySelector('#address');
+var setAddress = function (location) {
+  input.value = location.x + ', ' + location.y;
+};
+
+var getPinCords = function (isActive) {
+  var x = mainPin.offsetLeft - PIN_WIDTH / 2;
+  var heigth = isActive ? PIN_HEIGHT : PIN_WIDTH / 2;
+  var y = mainPin.offsetTop - heigth;
+
+  return {x: x, y: y};
+};
+
+// инициализация
+setAddress(getPinCords(false));
