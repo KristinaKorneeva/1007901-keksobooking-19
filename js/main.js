@@ -35,9 +35,23 @@ var pinNode = document.querySelector('.map__pins');
 //   palace: 'дворец',
 //   bungalo: 'бунгало'
 // };
+var priceHosting = {
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+  bungalo: 0
+};
 var adForm = document.querySelector('.ad-form');
 var fieldsetList = adForm.querySelectorAll('fieldset');
 var mainPin = document.querySelector('.map__pin--main');
+var input = document.querySelector('#address');
+var timeCheckIn = document.querySelector('#timein');
+var timeCheckOut = document.querySelector('#timeout');
+var roomsCount = document.querySelector('#room_number');
+var guestCount = document.querySelector('#capacity');
+var guestOptions = guestCount.querySelectorAll('option');
+var selectHouseType = document.querySelector('#type');
+var inputPrice = document.querySelector('#price');
 
 
 var getRundomNumber = function (min, max) {
@@ -182,7 +196,6 @@ var setActiveState = function () {
   for (var j = 0; j < fieldsetList.length; j++) {
     fieldsetList[j].removeAttribute('disabled');
   }
-  setAddress();
   renderMapItems();
   setAddress(getPinCords(true));
 };
@@ -203,7 +216,6 @@ mainPin.addEventListener('mousemove', function () {
   setAddress(getPinCords(true));
 });
 
-var input = document.querySelector('#address');
 var setAddress = function (location) {
   input.value = location.x + ', ' + location.y;
 };
@@ -218,3 +230,36 @@ var getPinCords = function (isActive) {
 
 // инициализация
 setAddress(getPinCords(false));
+
+// тип жилья
+var getPrice = function (type) {
+  return priceHosting[type];
+};
+
+selectHouseType.addEventListener('change', function (evt) {
+  inputPrice.setAttribute('min', getPrice(evt.currentTarget.value));
+  inputPrice.setAttribute('placeholder', getPrice(evt.currentTarget.value));
+});
+
+// Время заезда
+timeCheckIn.addEventListener('change', function (evt) {
+  timeCheckOut.value = evt.currentTarget.value;
+});
+timeCheckOut.addEventListener('change', function (evt) {
+  timeCheckIn.value = evt.currentTarget.value;
+});
+
+// Количество комнат
+roomsCount.addEventListener('change', function (evt) {
+  for (var w = 0; w < guestOptions.length; w++) {
+    var optionValue = guestOptions[w].value;
+    if (Number(optionValue) <= Number(evt.currentTarget.value) && Number(evt.currentTarget.value) < 100 && Number(optionValue) !== 0) {
+      guestOptions[w].removeAttribute('disabled');
+    } else if (Number(evt.currentTarget.value) === 100 && Number(optionValue) === 0) {
+      guestOptions[w].removeAttribute('disabled');
+    } else {
+      guestOptions[w].setAttribute('disabled', 'disabled');
+    }
+  }
+  guestCount.querySelector('option:not([disabled="disabled"])').setAttribute('selected', 'selected');
+});
